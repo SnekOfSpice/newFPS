@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://crf8p17e1ywg"]
+
+[ext_resource type="PackedScene" uid="uid://knfro1u6w4iu" path="res://player.tscn" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://cle2d5ebr1jkk" path="res://game/rooms/room_manager.tscn" id="2_fj7yv"]
+
+[node name="World" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_f3sb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.681928, 1.30927, -0.699015)
+
+[node name="RoomManager" parent="." instance=ExtResource("2_fj7yv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0621952, 0, 0.059284)

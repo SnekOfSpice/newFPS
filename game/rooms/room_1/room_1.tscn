@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn6jncbbb8q0l"]
+
+[ext_resource type="PackedScene" uid="uid://b8yp8h31etexo" path="res://game/rooms/room_1/room1.gltf" id="1_mhqi6"]
+[ext_resource type="Script" uid="uid://b1g0lpplpgkvf" path="res://game/rooms/room.gd" id="1_n07j7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ee0um"]
+size = Vector3(12.9021, 5.13974, 1)
+
+[node name="Room1" type="Node3D" node_paths=PackedStringArray("room_enter_area")]
+script = ExtResource("1_n07j7")
+room_enter_area = NodePath("Area3D")
+
+[node name="room1" parent="." instance=ExtResource("1_mhqi6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.51913)
+
+[node name="Entry" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.138703, 0.371106, -0.0799798)
+
+[node name="Exit" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31838, 0.395046, -4.96654)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.495483, 0.822229, -1.16826)
+shape = SubResource("BoxShape3D_ee0um")

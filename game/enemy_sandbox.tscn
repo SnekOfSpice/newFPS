@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://dttf3wq6m7tsr"]
+
+[ext_resource type="Script" uid="uid://rjffotvw1du4" path="res://game/enemy_sandbox.gd" id="1_c5k5t"]
+[ext_resource type="PackedScene" uid="uid://dohra0r4a0eev" path="res://game/enemy.tscn" id="2_xjkkw"]
+[ext_resource type="PackedScene" uid="uid://0rey3g84e3yc" path="res://game/ragdoll_loli.tscn" id="3_xjkkw"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_c5k5t"]
+vertices = PackedVector3Array(-9.5, 0.339081, -9.5, -9.5, 0.339081, 9.5, 9.5, 0.339081, 9.5, 9.5, 0.339081, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_idbte"]
+size = Vector2(20, 20)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ebvne"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c5k5t"]
+albedo_color = Color(0.841776, 0.333264, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_egdit"]
+material = SubResource("StandardMaterial3D_c5k5t")
+
+[node name="EnemySandbox" type="Node3D"]
+script = ExtResource("1_c5k5t")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.160919, 0)
+navigation_mesh = SubResource("NavigationMesh_c5k5t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.160919, 0)
+mesh = SubResource("PlaneMesh_idbte")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_ebvne")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.231188, 0.972909, 0, -0.972909, 0.231188, -0.922915, 3.29402, 4.39759)
+
+[node name="Enemy" parent="." instance=ExtResource("2_xjkkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38355, 0.058503, -3.21635)
+
+[node name="Target" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24387, 0.199688, 0.345771)
+mesh = SubResource("PrismMesh_egdit")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Target"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23685, 0)
+
+[node name="RagdollLoli" parent="Target" instance=ExtResource("3_xjkkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.46575, 0.417457, 3.01487)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.998284, 0.0585572, 0, -0.0585572, 0.998284, 0, 0, 0, 1, -16.2386, 6.50965, 0)
+light_energy = 1.646
+light_indirect_energy = 6.333

@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dohra0r4a0eev"]
+
+[ext_resource type="Script" uid="uid://ddpttdgj6eo3g" path="res://game/enemy.gd" id="1_s4oog"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_unjtp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s4oog"]
+albedo_color = Color(0.97485, 0.265235, 0.696453, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0fifv"]
+material = SubResource("StandardMaterial3D_s4oog")
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_s4oog")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87569, 0)
+shape = SubResource("CapsuleShape3D_unjtp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.941497, 0)
+mesh = SubResource("CapsuleMesh_0fifv")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0155909, 2.00183, -0.0893507)
+light_color = Color(0.638951, 0.20241, 0.298887, 1)

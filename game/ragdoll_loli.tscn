@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://0rey3g84e3yc"]
+
+[ext_resource type="Script" uid="uid://d1ix07bu84cd1" path="res://ragdoll_loli.gd" id="1_egqv4"]
+[ext_resource type="PackedScene" uid="uid://botn0f662u24g" path="res://game/physicalloli2.tscn" id="2_egqv4"]
+
+[node name="RagdollLoli" type="Node3D"]
+script = ExtResource("1_egqv4")
+
+[node name="playerLoliRiggedClean" parent="." instance=ExtResource("2_egqv4")]
