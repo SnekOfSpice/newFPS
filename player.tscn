@@ -1,8 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://knfro1u6w4iu"]
+[gd_scene load_steps=16 format=3 uid="uid://knfro1u6w4iu"]
 
 [ext_resource type="Script" uid="uid://7pp0ejh3eojn" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Shader" uid="uid://dstr704bnve78" path="res://quantized-bayer-dither.gdshader" id="2_onrkg"]
+[ext_resource type="Shader" uid="uid://dk7wwrxu4ql8e" path="res://game/textures/sps_dither.gdshader" id="3_i3pqv"]
+[ext_resource type="Shader" uid="uid://uhharwylbum1" path="res://game/textures/hsv_brightness.gdshader" id="4_hqtel"]
+[ext_resource type="Shader" uid="uid://8pofd52i4fmv" path="res://game/textures/pixelate.gdshader" id="5_sweqy"]
+[ext_resource type="Shader" uid="uid://n2eah2uhq2b6" path="res://game/textures/gradient_map.gdshader" id="6_2hs0m"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_onrkg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onrkg"]
+shader = ExtResource("2_onrkg")
+shader_parameter/quantize_groups = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hs0m"]
+shader = ExtResource("5_sweqy")
+shader_parameter/pixel_size = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqtel"]
+shader = ExtResource("3_i3pqv")
+shader_parameter/resolution_downsampling = 3.4
+shader_parameter/bit_depth = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sweqy"]
+shader = ExtResource("4_hqtel")
+shader_parameter/hue_shift = 0.0
+shader_parameter/saturation_mult = 0.753
+shader_parameter/value_mult = 1.0
+shader_parameter/brightness_add = 0.0
+shader_parameter/contrast_mult = 1.0
+
+[sub_resource type="Gradient" id="Gradient_1jxqw"]
+offsets = PackedFloat32Array(0, 0.229508, 0.909836, 0.967213)
+colors = PackedColorArray(0.368696, 0.157241, 0.399332, 1, 0.645814, 0.330816, 0.691322, 1, 0.94679, 0.685281, 0.412058, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_dw050"]
+gradient = SubResource("Gradient_1jxqw")
+width = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b26j0"]
+shader = ExtResource("6_2hs0m")
+shader_parameter/gradient = SubResource("GradientTexture1D_dw050")
+shader_parameter/brightness_amp = 1.0
+shader_parameter/color_amp = Vector3(0.715, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
 
@@ -16,6 +56,57 @@ shape = SubResource("CapsuleShape3D_onrkg")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.74073, 0.0919058)
 near = 0.016
+
+[node name="TextureRect" type="TextureRect" parent="Camera3D"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_onrkg")
+offset_right = 800.0
+offset_bottom = 600.0
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="Camera3D"]
+
+[node name="ColorRect2" type="ColorRect" parent="Camera3D/CanvasLayer3"]
+material = SubResource("ShaderMaterial_2hs0m")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera3D"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Camera3D/CanvasLayer"]
+material = SubResource("ShaderMaterial_hqtel")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="Camera3D"]
+
+[node name="ColorRect2" type="ColorRect" parent="Camera3D/CanvasLayer2"]
+material = SubResource("ShaderMaterial_sweqy")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer4" type="CanvasLayer" parent="Camera3D"]
+
+[node name="ColorRect2" type="ColorRect" parent="Camera3D/CanvasLayer4"]
+material = SubResource("ShaderMaterial_b26j0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 
